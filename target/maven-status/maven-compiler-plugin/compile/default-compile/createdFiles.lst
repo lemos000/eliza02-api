@@ -3,6 +3,7 @@ br\com\fiap\gs\eliza\repository\UsuarioRepository.class
 br\com\fiap\gs\eliza\domain\dto\RespostaBotDTO.class
 br\com\fiap\gs\eliza\service\GeminiService.class
 br\com\fiap\gs\eliza\controller\AuthController.class
+br\com\fiap\gs\eliza\exception\ValidationExceptionHandler.class
 br\com\fiap\gs\eliza\domain\entity\Usuario.class
 br\com\fiap\gs\eliza\auth\SecurityConfig.class
 br\com\fiap\gs\eliza\service\UsuarioService.class
@@ -12,6 +13,7 @@ br\com\fiap\gs\eliza\ElizaApplication.class
 br\com\fiap\gs\eliza\auth\JwtAuthenticationFilter.class
 br\com\fiap\gs\eliza\domain\dto\JwtResponseDTO.class
 br\com\fiap\gs\eliza\repository\MensagemRepository.class
+br\com\fiap\gs\eliza\controller\MensagemController.class
 br\com\fiap\gs\eliza\domain\dto\CadastroUsuarioDTO.class
 br\com\fiap\gs\eliza\domain\dto\LoginDTO.class
 br\com\fiap\gs\eliza\domain\entity\Usuario$UsuarioBuilder.class

@@ -20,10 +20,12 @@ public class Mensagem {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @Column(nullable = false, length = 1000)
+    @Lob
+    @Column(nullable = false)
     private String textoUsuario;
 
-    @Column(nullable = false, length = 1000)
+    @Lob
+    @Column(nullable = false)
     private String respostaBot;
 
     @Builder.Default

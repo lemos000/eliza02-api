@@ -22,7 +22,7 @@ public class MensagemService {
     private GeminiService geminiService;
 
     public String processarResposta(Usuario usuario, String textoUser) {
-        String respostaBot = geminiService.processarResposta(usuario, textoUser);
+        String respostaBot = geminiService.processarResposta(usuario.getNome(), textoUser);
         return respostaBot;
     }
 

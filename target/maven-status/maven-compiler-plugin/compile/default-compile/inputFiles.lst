@@ -2,6 +2,7 @@ D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\auth\J
 D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\auth\JwtUtil.java
 D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\auth\SecurityConfig.java
 D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\controller\AuthController.java
+D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\controller\MensagemController.java
 D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\domain\dto\CadastroUsuarioDTO.java
 D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\domain\dto\HistoricoMensagemDTO.java
 D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\domain\dto\JwtResponseDTO.java
@@ -11,6 +12,7 @@ D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\domain
 D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\domain\entity\Mensagem.java
 D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\domain\entity\Usuario.java
 D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\ElizaApplication.java
+D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\exception\ValidationExceptionHandler.java
 D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\repository\MensagemRepository.java
 D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\repository\UsuarioRepository.java
 D:\Coding\Global Sollutions\jAVA\eliza\src\main\java\br\com\fiap\gs\eliza\service\GeminiService.java

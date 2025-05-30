@@ -8,4 +8,7 @@ public class HistoricoMensagemDTO {
     private String textoUsuario;
     private String respostaBot;
     private LocalDateTime dataHora;
+
+    public HistoricoMensagemDTO(String textoUsuario, String respostaBot, LocalDateTime dataHora) {
+    }
 }
