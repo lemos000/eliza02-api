@@ -5,11 +5,13 @@ import br.com.fiap.gs.eliza.domain.entity.Usuario;
 import br.com.fiap.gs.eliza.repository.MensagemRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+import java.util.Optional;
 
 
 @Service
@@ -39,8 +41,27 @@ public class MensagemService {
 
     }
 
-    public List<Mensagem> buscarHistoricoPorUsuario(Long usuarioId) {
-        return mensagemRepository.findByUsuarioIdOrderByDataHoraAsc(usuarioId);
+    public Page<Mensagem> buscarHistoricoPorUsuario(Long usuarioId, Pageable pageable) {
+        return mensagemRepository.findByUsuarioIdOrderByDataHoraAsc(usuarioId, pageable);
+    }
+
+    @Transactional
+    public boolean deletarMensagem(Usuario usuario, Long mensagemId) {
+
+        Optional<Mensagem> mensagem = mensagemRepository.findByIdAndUsuarioId(mensagemId, usuario.getId());
+        if (mensagem.isPresent()){
+            mensagemRepository.deleteByIdAndUsuarioId(mensagemId, usuario.getId());
+            return true;
+
+        } else {
+            return false;
+        }
+
+    }
+    public Optional<Mensagem> buscarMensagem(Long id) {
+        Optional<Mensagem> mensagem = mensagemRepository.findById(id);
+        return mensagem;
+
     }
 
 

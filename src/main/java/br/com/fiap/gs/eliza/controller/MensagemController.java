@@ -9,12 +9,13 @@ import br.com.fiap.gs.eliza.domain.entity.Usuario;
 import br.com.fiap.gs.eliza.service.MensagemService;
 import br.com.fiap.gs.eliza.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/api/chat")
@@ -49,18 +50,30 @@ public class MensagemController {
     }
 
     @GetMapping("/historico")
-    public ResponseEntity<List<HistoricoMensagemDTO>> buscarHistorico(
-            @RequestHeader("Authorization") String authHeader) {
+    public ResponseEntity<Page<HistoricoMensagemDTO>> buscarHistorico(
+            @RequestHeader("Authorization") String authHeader,
+            Pageable pageable) {
         Usuario usuario = getUsuarioFromToken(authHeader);
         if (usuario == null) return ResponseEntity.status(401).build();
 
-        List<Mensagem> mensagens = mensagemService.buscarHistoricoPorUsuario(usuario.getId());
-        List<HistoricoMensagemDTO> historico = mensagens.stream()
-                .map(m -> new HistoricoMensagemDTO(
-                        m.getTextoUsuario(),
-                        m.getRespostaBot(),
-                        m.getDataHora()))
-                .collect(Collectors.toList());
+        Page<Mensagem> mensagens = mensagemService.buscarHistoricoPorUsuario(usuario.getId(), pageable);
+        Page<HistoricoMensagemDTO> historico = mensagens.map(m -> new HistoricoMensagemDTO(
+                m.getTextoUsuario(),
+                m.getRespostaBot(),
+                m.getDataHora()
+        ));
         return ResponseEntity.ok(historico);
+    }
+
+    @PostMapping("/mensagem/{id}/deletar")
+    public ResponseEntity<?> deletar(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable Long id
+    ) {
+        Usuario usuario = getUsuarioFromToken(authHeader);
+        Boolean resposta = mensagemService.deletarMensagem(usuario, id);
+        if (resposta)
+            return ResponseEntity.ok("Deletado com sucesso");
+        return ResponseEntity.status(403).body("Sem permissão para deletar essa mensagem");
     }
 }
