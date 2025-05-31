@@ -1,5 +1,6 @@
 package br.com.fiap.gs.eliza.service;
 
+import br.com.fiap.gs.eliza.domain.dto.MensagemDTO;
 import br.com.fiap.gs.eliza.domain.entity.Mensagem;
 import br.com.fiap.gs.eliza.domain.entity.Usuario;
 import br.com.fiap.gs.eliza.repository.MensagemRepository;
@@ -58,10 +59,21 @@ public class MensagemService {
         }
 
     }
-    public Optional<Mensagem> buscarMensagem(Long id) {
-        Optional<Mensagem> mensagem = mensagemRepository.findById(id);
+    public Optional<Mensagem> buscarMensagem(Usuario usuario, Long mensagemId) {
+        Optional<Mensagem> mensagem = mensagemRepository.findByIdAndUsuarioId(mensagemId, usuario.getId());
         return mensagem;
 
+    }
+
+    @Transactional
+    public Optional<Mensagem> alterarMensagem(Usuario usuario, Mensagem message) {
+        Optional<Mensagem> mensagemASerAlterada = mensagemRepository.findByIdAndUsuarioId(message.getId(), usuario.getId());
+        if (mensagemASerAlterada.isPresent()) {
+            Mensagem mensagem = new Mensagem().builder().id(message.getId()).usuario(usuario).textoUsuario(message.getTextoUsuario()).dataHora(LocalDateTime.now()).build();
+            return Optional.of(mensagemRepository.save(mensagem));
+        }
+
+        return null;
     }
 
 

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/chat")
@@ -65,7 +67,7 @@ public class MensagemController {
         return ResponseEntity.ok(historico);
     }
 
-    @PostMapping("/mensagem/{id}/deletar")
+    @ DeleteMapping("/mensagem/{id}/deletar")
     public ResponseEntity<?> deletar(
             @RequestHeader("Authorization") String authHeader,
             @PathVariable Long id
@@ -75,5 +77,21 @@ public class MensagemController {
         if (resposta)
             return ResponseEntity.ok("Deletado com sucesso");
         return ResponseEntity.status(403).body("Sem permissão para deletar essa mensagem");
+    }
+
+
+    @PutMapping("mensagem/{id}/update")
+    public ResponseEntity<Mensagem> atualizar(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable Long id,
+            @RequestBody Mensagem mensagem
+    ) {
+        Usuario usuario = getUsuarioFromToken(authHeader);
+        Optional<Mensagem> novaMensagem = mensagemService.alterarMensagem(usuario, mensagem);
+        if (novaMensagem != null && !novaMensagem.isPresent()) return ResponseEntity.status(403).build();
+        return ResponseEntity.ok(novaMensagem.get());
+
+
+
     }
 }
