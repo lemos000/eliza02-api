@@ -11,7 +11,6 @@ public class JwtUtil {
 
     @Value("${jwt.secret}")
     private String jwtSecret;
-//    private String jwtSecret = "AZbN6qT8uRp1XsZ3wQ2LmJ5yVc9HgF4SaE0PwUdRvKcXtYhGb";
 
     private long jwtExpirationMs = 86400000;
 

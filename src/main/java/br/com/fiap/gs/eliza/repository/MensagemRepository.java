@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MensagemRepository extends JpaRepository<Mensagem, Long> {
-    public List<Mensagem> findAllByUsuario(Usuario usuario);
+    Page<Mensagem> findAllByUsuario(Usuario usuario, Pageable pageable);
 
     Page<Mensagem> findByUsuarioIdOrderByDataHoraAsc(Long usuarioId, Pageable pageable);
 

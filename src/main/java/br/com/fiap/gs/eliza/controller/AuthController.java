@@ -6,6 +6,7 @@ import br.com.fiap.gs.eliza.domain.dto.JwtResponseDTO;
 import br.com.fiap.gs.eliza.domain.dto.LoginDTO;
 import br.com.fiap.gs.eliza.domain.entity.Usuario;
 import br.com.fiap.gs.eliza.service.UsuarioService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
+@SecurityRequirement(name = "bearerAuth")
 public class AuthController {
 
     @Autowired

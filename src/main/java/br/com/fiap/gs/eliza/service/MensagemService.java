@@ -42,8 +42,8 @@ public class MensagemService {
 
     }
 
-    public Page<Mensagem> buscarHistoricoPorUsuario(Long usuarioId, Pageable pageable) {
-        return mensagemRepository.findByUsuarioIdOrderByDataHoraAsc(usuarioId, pageable);
+    public Page<Mensagem> buscarHistoricoPorUsuario(Usuario usuario, Pageable pageable) {
+        return mensagemRepository.findByUsuarioIdOrderByDataHoraAsc(usuario.getId(), pageable);
     }
 
     @Transactional
@@ -66,15 +66,17 @@ public class MensagemService {
     }
 
     @Transactional
-    public Optional<Mensagem> alterarMensagem(Usuario usuario, Mensagem message) {
-        Optional<Mensagem> mensagemASerAlterada = mensagemRepository.findByIdAndUsuarioId(message.getId(), usuario.getId());
+    public Optional<Mensagem> alterarMensagem(Long id, Usuario usuario, MensagemDTO message) {
+        Optional<Mensagem> mensagemASerAlterada = mensagemRepository.findByIdAndUsuarioId(id, usuario.getId());
         if (mensagemASerAlterada.isPresent()) {
-            Mensagem mensagem = new Mensagem().builder().id(message.getId()).usuario(usuario).textoUsuario(message.getTextoUsuario()).dataHora(LocalDateTime.now()).build();
+            Mensagem mensagem = mensagemASerAlterada.get();
+            mensagem.setTextoUsuario(message.getTexto());
+            mensagem.setDataHora(LocalDateTime.now());
             return Optional.of(mensagemRepository.save(mensagem));
         }
-
-        return null;
+        return Optional.empty();
     }
+
 
 
 }

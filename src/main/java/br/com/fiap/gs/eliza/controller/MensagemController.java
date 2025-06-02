@@ -8,6 +8,7 @@ import br.com.fiap.gs.eliza.domain.entity.Mensagem;
 import br.com.fiap.gs.eliza.domain.entity.Usuario;
 import br.com.fiap.gs.eliza.service.MensagemService;
 import br.com.fiap.gs.eliza.service.UsuarioService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/chat")
+@SecurityRequirement(name = "bearerAuth")
 public class MensagemController {
 
     @Autowired
@@ -36,7 +38,9 @@ public class MensagemController {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) return null;
         String jwt = authHeader.substring(7);
         String email = jwtUtil.getEmailFromToken(jwt);
-        return usuarioService.buscarPorEmail(email).orElse(null);
+        Usuario user = usuarioService.buscarPorEmail(email).orElse(null);
+        System.out.println("Usuário do token: " + user.getNome());
+        return user;
     }
 
     @PostMapping
@@ -58,7 +62,7 @@ public class MensagemController {
         Usuario usuario = getUsuarioFromToken(authHeader);
         if (usuario == null) return ResponseEntity.status(401).build();
 
-        Page<Mensagem> mensagens = mensagemService.buscarHistoricoPorUsuario(usuario.getId(), pageable);
+        Page<Mensagem> mensagens = mensagemService.buscarHistoricoPorUsuario(usuario, pageable);
         Page<HistoricoMensagemDTO> historico = mensagens.map(m -> new HistoricoMensagemDTO(
                 m.getTextoUsuario(),
                 m.getRespostaBot(),
@@ -81,15 +85,18 @@ public class MensagemController {
 
 
     @PutMapping("mensagem/{id}/update")
-    public ResponseEntity<Mensagem> atualizar(
+    public ResponseEntity<String> atualizar(
             @RequestHeader("Authorization") String authHeader,
             @PathVariable Long id,
-            @RequestBody Mensagem mensagem
+            @RequestBody MensagemDTO mensagem
     ) {
         Usuario usuario = getUsuarioFromToken(authHeader);
-        Optional<Mensagem> novaMensagem = mensagemService.alterarMensagem(usuario, mensagem);
-        if (novaMensagem != null && !novaMensagem.isPresent()) return ResponseEntity.status(403).build();
-        return ResponseEntity.ok(novaMensagem.get());
+        if (usuario == null) {
+            return ResponseEntity.unprocessableEntity().build();
+        }
+        Optional<Mensagem> novaMensagem = mensagemService.alterarMensagem(id, usuario, mensagem);
+        if (!novaMensagem.isPresent()) return ResponseEntity.status(404).body("Encontrou nada");
+        return ResponseEntity.ok("Mensagem alterada para: " + novaMensagem.get().getTextoUsuario());
 
 
 
