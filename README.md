@@ -2,8 +2,13 @@
 
 ## Descrição
 
-Eliza é uma API RESTful desenvolvida em Java com Spring Boot, que simula uma psicóloga virtual empática e atenciosa, especializada em apoio psicológico a pessoas em situações de vulnerabilidade ou crise. Utiliza autenticação JWT, integração com IA (Google Gemini) e persistência de dados em PostgreSQL.
+Eliza é uma API RESTful desenvolvida em Java com Spring Boot, concebida como um MVP para servir como psicóloga virtual empática e acessível, especialmente voltada ao suporte psicológico de pessoas em situação de vulnerabilidade após desastres, catástrofes naturais ou grandes crises sociais.
 
+A solução integra a inteligência artificial do Google Gemini, permitindo conversas humanizadas, acolhedoras e responsivas, capazes de entender o contexto emocional do usuário e oferecer orientações ou encaminhamentos de forma segura e ética. A IA foi treinada para compreender demandas sensíveis e proporcionar suporte inicial até que o indivíduo possa receber acompanhamento especializado.
+
+O projeto utiliza autenticação JWT para garantir a segurança e privacidade dos dados dos usuários e persiste as interações em banco de dados PostgreSQL, viabilizando histórico de conversas e acompanhamento contínuo.
+
+Como MVP, Eliza foi projetada para ser facilmente expandida no futuro, permitindo integrações com outros serviços de assistência social, plataformas de telemedicina, equipes de resposta a emergências e órgãos de saúde pública. A API pode ser incorporada a aplicativos móveis, portais de atendimento emergencial e sistemas de monitoramento pós-crise, promovendo cuidado psicológico imediato e humanizado em larga escala.
 ## Stacks Utilizadas
 
 - **Java 21**
