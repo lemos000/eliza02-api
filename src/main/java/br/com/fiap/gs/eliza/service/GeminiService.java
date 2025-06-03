@@ -1,17 +1,11 @@
 package br.com.fiap.gs.eliza.service;
 
-import br.com.fiap.gs.eliza.domain.entity.Mensagem;
-import br.com.fiap.gs.eliza.domain.entity.Usuario;
 import br.com.fiap.gs.eliza.repository.MensagemRepository;
 import com.google.genai.Client;
 import com.google.genai.types.Candidate;
 import com.google.genai.types.GenerateContentResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
-import java.util.List;
 
 @Service
 @Slf4j
@@ -28,21 +22,6 @@ public class GeminiService {
         this.mensagemRepository = mensagemRepository;
     }
 
-    public String montarPromptComHistorico(Usuario usuario, String mensagemAtual, int qtdHistorico) {
-        List<Mensagem> historico = mensagemRepository.findTop10ByUsuarioOrderByDataHoraDesc(usuario);
-        Collections.reverse(historico);
-
-        StringBuilder prompt = new StringBuilder();
-        prompt.append(CONTEXTO_SISTEMA).append("\n\n");
-        for (Mensagem msg : historico) {
-            prompt.append("Usuário: ").append(msg.getTextoUsuario()).append("\n");
-            prompt.append("Eliza: ").append(msg.getRespostaBot()).append("\n");
-        }
-        prompt.append("Usuário: ").append(mensagemAtual).append("\n");
-        prompt.append("Eliza:");
-        return prompt.toString();
-    }
-
     public String processarResposta(String usuarioName, String mensagem) {
         try {
             String mensagemCompleta = CONTEXTO_SISTEMA + "\n\nNome do usuário: " + usuarioName + "\n\nMensagem do usuário: " + mensagem;
@@ -52,8 +31,6 @@ public class GeminiService {
                     mensagemCompleta,
                     null
             );
-
-            // Pega o texto da primeira Candidate (isso é o texto da IA)
             if (response.candidates().isPresent()) {
                 Candidate candidate = response.candidates().get().get(0);
                 if (candidate.content().isPresent()) {
@@ -61,7 +38,7 @@ public class GeminiService {
                     if (parts.isPresent() && !parts.get().isEmpty()) {
                         var texto = parts.get().get(0).text();
                         if (texto.isPresent()) {
-                            return texto.get(); // <-- Este é só o texto da IA
+                            return texto.get(); // em tese deve retornar apenas o texto resposta do gemini
                         }
                     }
                 }

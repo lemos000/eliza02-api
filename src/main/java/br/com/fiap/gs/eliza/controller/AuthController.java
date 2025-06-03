@@ -43,7 +43,7 @@ public class AuthController {
             String token = jwtUtil.gerarToken(usuario);
             return ResponseEntity.ok(new JwtResponseDTO(token));
         } catch (IllegalArgumentException e) {
-            // Retorna Forbidden se login inválido
+
             return ResponseEntity.status(403).body("Email ou senha inválidos.");
         }
     }

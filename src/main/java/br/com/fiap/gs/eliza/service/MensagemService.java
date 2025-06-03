@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -57,11 +56,6 @@ public class MensagemService {
         } else {
             return false;
         }
-
-    }
-    public Optional<Mensagem> buscarMensagem(Usuario usuario, Long mensagemId) {
-        Optional<Mensagem> mensagem = mensagemRepository.findByIdAndUsuarioId(mensagemId, usuario.getId());
-        return mensagem;
 
     }
 
