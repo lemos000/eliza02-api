@@ -4,6 +4,7 @@ import br.com.fiap.gs.eliza.auth.JwtUtil;
 import br.com.fiap.gs.eliza.domain.dto.CadastroUsuarioDTO;
 import br.com.fiap.gs.eliza.domain.dto.JwtResponseDTO;
 import br.com.fiap.gs.eliza.domain.dto.LoginDTO;
+import br.com.fiap.gs.eliza.domain.dto.LoginResponseDTO;
 import br.com.fiap.gs.eliza.domain.entity.Usuario;
 import br.com.fiap.gs.eliza.service.UsuarioService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -41,7 +42,8 @@ public class AuthController {
         try {
             Usuario usuario = usuarioService.autenticar(dto.getEmail(), dto.getSenha());
             String token = jwtUtil.gerarToken(usuario);
-            return ResponseEntity.ok(new JwtResponseDTO(token));
+            LoginResponseDTO responseDTO = new LoginResponseDTO(token, usuario.getNome(), usuario.getEmail());
+            return ResponseEntity.ok(responseDTO);
         } catch (IllegalArgumentException e) {
 
             return ResponseEntity.status(403).body("Email ou senha inválidos.");
