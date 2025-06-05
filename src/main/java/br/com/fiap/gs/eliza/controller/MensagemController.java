@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 
 import java.util.Optional;
 
-
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api/chat")
 @SecurityRequirement(name = "bearerAuth")
