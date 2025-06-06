@@ -64,6 +64,7 @@ public class MensagemController {
 
         Page<Mensagem> mensagens = mensagemService.buscarHistoricoPorUsuario(usuario, pageable);
         Page<HistoricoMensagemDTO> historico = mensagens.map(m -> new HistoricoMensagemDTO(
+                m.getId(),
                 m.getTextoUsuario(),
                 m.getRespostaBot(),
                 m.getDataHora()

@@ -9,11 +9,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class HistoricoMensagemDTO {
+    private long id;
     private String textoUsuario;
     private String respostaBot;
     private LocalDateTime dataHora;
 
-    public HistoricoMensagemDTO(String textoUsuario, String respostaBot, LocalDateTime dataHora) {
+    public HistoricoMensagemDTO(long id, String textoUsuario, String respostaBot, LocalDateTime dataHora) {
+        this.id = id;
         this.textoUsuario = textoUsuario;
         this.respostaBot = respostaBot;
         this.dataHora = dataHora;
