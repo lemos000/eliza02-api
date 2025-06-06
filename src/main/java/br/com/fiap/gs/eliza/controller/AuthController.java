@@ -42,7 +42,7 @@ public class AuthController {
         try {
             Usuario usuario = usuarioService.autenticar(dto.getEmail(), dto.getSenha());
             String token = jwtUtil.gerarToken(usuario);
-            LoginResponseDTO responseDTO = new LoginResponseDTO(token, usuario.getNome(), usuario.getEmail());
+            LoginResponseDTO responseDTO = new LoginResponseDTO(token, usuario.getNome(), usuario.getEmail(), usuario.getId());
             return ResponseEntity.ok(responseDTO);
         } catch (IllegalArgumentException e) {
 
